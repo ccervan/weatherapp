@@ -23,14 +23,11 @@ def home(request):
         html_content = get_html(request)
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
+
         data = dict()
-        # extract region
         data['region'] = soup.find("div", attrs={"id": "wob_loc"}).text
-        # get the day and hour now
-        data['dayhour'] = soup.find("div", attrs={"id": "wob_dts"}).text
-        # get the actual weather
+        data['time_now'] = soup.find("div", attrs={"id": "wob_dts"}).text
         data['weather_now'] = soup.find("span", attrs={"id": "wob_dc"}).text
-        # extract temperature now
         data['temp_now'] = soup.find("span", attrs={"id": "wob_tm"}).text
         return render(request, 'core/home.html', {'data': data})
     return render(request, 'core/home.html')
